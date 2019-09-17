@@ -36,3 +36,41 @@ as.numeric(vec_logical) * vec_numeric
 as.factor(vec_logical) * vec_numeric
 as.numeric(as.factor(vec_logical)) * vec_numeric
 ```
+#Problem 2
+Create a data frame
+
+```{r}
+x = rnorm(500)
+y = rnorm(500)
+log_pro2 = x + y > 1
+num_pro2 = as.numeric(log_pro2)
+fac_pro2 = as.factor(log_pro2)
+pro2_df = tibble(
+  x,y,log_pro2,num_pro2,fac_pro2
+)
+
+```
+Write a short description of your vector
+
+the size of the dataset is row = `r nrow(pro2_df)` and col = `r ncol(pro2_df)`
+
+the mean of x is `r mean(x)`
+
+the median of x is `r median(x)`
+
+the standard deviation of x is `r sd(x)`
+
+the proportion of cases for which x + y > 1 is `r length(log_pro2[[TRUE]])/length(x)`
+
+```{r}
+#Make a scatterplot
+scatterplot1 = ggplot(pro2_df, aes(x = x, y = y,color = log_pro2)) + geom_point()
+scatterplot2 =ggplot(pro2_df, aes(x = x, y = y,color = num_pro2)) + geom_point()
+scatterplot3 =ggplot(pro2_df, aes(x = x, y = y,color = fac_pro2)) + geom_point()
+scatterplot1
+scatterplot2
+scatterplot3
+
+ggsave("scatterplot1.pdf", scatterplot1) # Export your first scatterplot to your project directory using ggsave
+```
+The scatterplot using logical vector as its color and that using factor vector as its color have the same results, both according to "TRUE" and "FALSE". The scatterplot using numeric vector as its color as scales from 0 to 1.
